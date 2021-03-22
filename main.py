@@ -1,7 +1,7 @@
 import discord
 import os
 import json
-from keep_alive import keep_alive
+#from keep_alive import keep_alive
 
 client = discord.Client()
 
@@ -64,5 +64,5 @@ async def on_message(message):
             else:
                 await message.channel.send(data["wrong_answer_toast"])
 
-keep_alive()
+#keep_alive()
 client.run(os.getenv('TOKEN'))
