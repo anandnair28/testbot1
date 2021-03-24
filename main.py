@@ -1,6 +1,8 @@
 import discord
 import os
 import json
+# import  "./database"
+import database.database as db
 
 client = discord.Client()
 
@@ -25,6 +27,19 @@ async def on_message(message):
         intro_text = data["intro"].format(str(message.author))
         await message.channel.send(intro_text)
         await message.channel.send(file=discord.File('thtest.png'))
+
+    if message.content.startswith('$items'):
+        db.hello_world()
+        # conn = database.init_db()
+        # items = conn.execute("SELECT id, name, age from USER")
+        # for row in items:
+        #     print("Id= ", row[0])
+        #     print("name= ", row[1])
+        #     print("age= ", row[2])
+
+        print("Operations done successfully")
+        await message.channel.send("done")
+    
 
     if message.content.startswith('$clue'):
         
