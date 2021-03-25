@@ -33,11 +33,11 @@ async def on_message(message):
         return
     
     else:
-        curr.execute("INSERT INTO users VALUES ('{0}', 0);".format(str(message.author))
+        curr.execute("INSERT INTO users VALUES ('{0}', 0);".format(str(message.author)))
 
-    if message.content.startswith('$scoreboard'):
+    if message.content.startswith('$leaderboard'):
         curr.execute("SELECT * from users;")
-        print(curr.fetchall())
+        await message.channel.send(str(curr.fetchall()))
 
     if message.content.startswith('$hello'):
         intro_text = data["intro"].format(str(message.author))
