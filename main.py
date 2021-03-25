@@ -9,12 +9,6 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 curr = conn.cursor()
 
-curr.execute(
-  '''CREATE DATABASE treasurehunt2021 ON CONFLICT DO NOTHING;'''
-)
-
-curr.execute("USE DATABASE treasurehunt2021;")
-
 curr.execute('''CREATE TABLE IF NOT EXISTS users ( 
   user_id varchar ( 50 ) primary key, 
   score int );''')
