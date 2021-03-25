@@ -7,6 +7,12 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
+curr = conn.cursor()
+
+curr.execute('''CREATE TABLE IF NOT EXISTS users ( 
+  user_id varchar ( 50 ) primary key, 
+  score int(6) );''')
+
 client = discord.Client()
 
 data_file = open('data.json')
@@ -25,6 +31,9 @@ async def on_message(message):
 
     if message.author == client.user:
         return
+    
+    else:
+        curr.execute("INSERT INTO users VALUES ('{0}', 0)".format(str(message.author))
 
     if message.content.startswith('$hello'):
         intro_text = data["intro"].format(str(message.author))
