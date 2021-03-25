@@ -1,6 +1,11 @@
 import discord
 import os
 import json
+import psycopg2
+
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 client = discord.Client()
 
@@ -63,4 +68,4 @@ async def on_message(message):
             else:
                 await message.channel.send(data["wrong_answer_toast"])
 
-client.run(os.getenv('TOKEN'))
+client.run(os.getenv('TOKEN')) 
