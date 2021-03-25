@@ -33,7 +33,7 @@ async def on_message(message):
         return
     
     else:
-        curr.execute("INSERT INTO users VALUES ('{0}', 0);".format(str(message.author)))
+        curr.execute("INSERT INTO users VALUES ('{0}', 0) ON CONFLICT DO NOTHING;".format(str(message.author)))
 
     if message.content.startswith('$leaderboard'):
         curr.execute("SELECT * from users;")
