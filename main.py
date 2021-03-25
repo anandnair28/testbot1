@@ -10,10 +10,10 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 curr = conn.cursor()
 
 curr.execute(
-  '''create database if not exists treasurehunt2021;'''
+  '''CREATE DATABASE IF NOT EXISTS  treasurehunt2021;'''
 )
 
-curr.execute("use treasurehunt2021;")
+curr.execute("USE DATABASE treasurehunt2021;")
 
 curr.execute('''CREATE TABLE IF NOT EXISTS users ( 
   user_id varchar ( 50 ) primary key, 
