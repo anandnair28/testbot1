@@ -11,7 +11,7 @@ curr = conn.cursor()
 
 curr.execute('''CREATE TABLE IF NOT EXISTS users ( 
   user_id varchar ( 50 ) primary key, 
-  score int(6) );''')
+  score int );''')
 
 client = discord.Client()
 
