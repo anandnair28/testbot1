@@ -5,11 +5,7 @@ import psycopg2
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 
-conn = psycopg2.connect(
-    host='HOST',
-    database='DBNAME',
-    user='DBUSER',
-    password='PASS')
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 curr = conn.cursor()
 
