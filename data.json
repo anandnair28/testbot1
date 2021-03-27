@@ -1,18 +1,29 @@
-{
-  "clues" : [
-    "Answer is CHARLIE\nEnter your answer as $ans <ANSWER HERE>",
-    "Answer is CYPHER\nEnter your answer as $ans <ANSWER HERE>",
-    "Answer is FESTEMBER\nEnter your answer as $ans <ANSWER HERE>"
-  ],
-  "answers" : [
-    "CHARLIE",
-    "CYPHER",
-    "FESTEMBER"
-  ],
-  "intro" : "Hello {0}! \n This is an intro intro text \n Type $clue for your first clue",
-  "correct_answer_toast" : "That is the correct answer!",
-  "next_clue_toast" : "Type $clue for next clue",
-  "next_stage_toast" : "You have completed this round! \n Follow this link to go to the next stage!",
-  "wrong_answer_toast" : "Sorry! Please Try Again!",
-  "wrong_format_toast" : "Please try in correct format!"
-}
+[
+  {
+    "clue": "this is the first clue",
+    "clue_time": 1616838580.842228,
+    "hint_time": 1616838580.842228,
+    "hint": "1st hint",
+    "correct_toast": "correct ans",
+    "wrong_toast": "wrong ans",
+    "answer": "one"
+  },
+  {
+    "clue": "this is the second clue",
+    "clue_time": 1616838580.842228,
+    "hint_time": 1617079210.0,
+    "hint": "2nd hint",
+    "correct_toast": "correct ans",
+    "wrong_toast": "wrong ans",
+    "answer": "two"
+  },
+  {
+    "clue": "this is the third clue",
+    "clue_time": 1616838580.842228,
+    "hint_time": 1616838580.842228,
+    "hint": "third hint",
+    "correct_toast": "correct ans",
+    "wrong_toast": "wrong ans",
+    "answer": "three"
+  }
+]

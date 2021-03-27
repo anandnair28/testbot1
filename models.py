@@ -41,11 +41,12 @@ class Database:
                 """CREATE TABLE IF NOT EXISTS clues (
                 clue_id integer PRIMARY KEY,
                 clue text,
-                clue_time datetime,
+                clue_time timestamp,
                 hint text,
-                hint_time datetime,
+                hint_time timestamp,
                 correct_toast text,
-                wrong_toast text
+                wrong_toast text,
+                answer text
             );"""
             )
             print("Created clues table")
@@ -94,3 +95,20 @@ class Database:
             print("Such a user doesn't exist")
             return self.add_user(name)
         return result
+
+    def add_clues(self, clue):
+        """add clues to the db,clue object must be of the type
+            clue : {
+            "clue": string,
+            "clue_time": timestamp,
+            "hint": string,
+            "hint_time": timestamp,
+            "correct_toast": string,
+            "wrong_toast": string,
+            "answer": string
+        },"""
+        query = "INSERT INTO clues(clue, clue_time, hint, hint_time, correct_toast, wrong_toast, answer) \
+        VALUES (:clue, :clue_time, :hint, :hint_time, :correct_toast, :wrong_toast, :answer)"
+        self.cursor.execute(query, clue)
+        self.conn.commit()
+        print("Added a clue to the db with the row no, ", self.cursor.lastrowid)
