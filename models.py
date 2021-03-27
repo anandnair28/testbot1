@@ -9,7 +9,8 @@ from sqlite3.dbapi2 import Error
 
 DB_NAME = "festemberHunt21.db"
 
-
+# TODO: Add first person to ans the question toast
+# * Add method to prevent ppl who have completed the hunt from receiving hints and clues
 class Database:
     """ Used to do crud operations on the db"""
 
@@ -159,9 +160,18 @@ class Database:
         if current_time > clue_time:
             # user is answering question after the question is out
             if answer == clue[7]:
+                self.update_user_current_clue(username, user[3] + 1)
                 return clue[5]
             else:
                 return clue[6]
         else:
             # user answering question before the question is out
             return "oombu"
+
+    def update_user_current_clue(self, username, clue_no):
+        """updates the question number for the given username to the given number"""
+        print("Updating the user's current clue")
+        query = "UPDATE users SET clue = ? WHERE name =?"
+        self.cursor.execute(query, (clue_no, username))
+        user = self.find_user(username)
+        print("the updated user is", user)
