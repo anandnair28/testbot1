@@ -33,7 +33,7 @@ class Database:
                 """CREATE TABLE IF NOT EXISTS users ( 
 				user_id integer PRIMARY KEY,
 				name text NOT NULL, 
-				time_joined datetime,
+				time_joined timestamp,
 				clue integer);"""
             )
             print("Created users table")
@@ -71,7 +71,7 @@ class Database:
             print("Inserting a person with the username, ", name)
             time = datetime.datetime.now()
             query = "INSERT INTO users(name, time_joined, clue) VALUES(?,?,?)"
-            self.cursor.execute(query, (name, time, 1))
+            self.cursor.execute(query, (name, datetime.datetime.timestamp(time), 1))
             self.conn.commit()
             print("Created a user with the id:", self.cursor.lastrowid)
             self.cursor.execute(
@@ -79,6 +79,7 @@ class Database:
             )
             result = self.cursor.fetchone()
             print("created a user :", result)
+            return result
         except Exception as e:
             print("couldn't create a row in the db, {}".format(str(e)))
 
