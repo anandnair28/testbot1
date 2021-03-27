@@ -32,21 +32,24 @@ async def on_message(message):
         res = db.find_user(str(message.author))
         await message.channel.send(res)
     # if message.content.startswith('$leaderboard'):
+    if message.content.startswith("$clue"):
+        clue = db.get_clue(str(message.author))
+        await message.channel.send(clue)
 
     if message.content.startswith("$hello"):
         intro_text = data["intro"].format(str(message.author))
         await message.channel.send(intro_text)
         await message.channel.send(file=discord.File("thtest.png"))
 
-    if message.content.startswith("$clue"):
+    # if message.content.startswith("$clue"):
 
-        clueid = users.get(str(message.author), 0)
+    #     clueid = users.get(str(message.author), 0)
 
-        if clueid < 3:
-            await message.channel.send(data["clues"][clueid])
+    #     if clueid < 3:
+    #         await message.channel.send(data["clues"][clueid])
 
-        else:
-            await message.channel.send(data["next_stage_toast"])
+    #     else:
+    #         await message.channel.send(data["next_stage_toast"])
 
     if message.content.startswith("$ans"):
 

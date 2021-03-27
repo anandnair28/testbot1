@@ -111,4 +111,20 @@ class Database:
         VALUES (:clue, :clue_time, :hint, :hint_time, :correct_toast, :wrong_toast, :answer)"
         self.cursor.execute(query, clue)
         self.conn.commit()
-        print("Added a clue to the db with the row no, ", self.cursor.lastrowid)
+        return print("Added a clue to the db with the row no, ", self.cursor.lastrowid)
+
+    def get_clue(self, username):
+        """get the clue for the current question from the database,
+        and returns the clue as a string"""
+        # find the user
+        user = self.find_user(username)
+        query = "SELECT * FROM clues WHERE clue_id=:clueId"
+        self.cursor.execute(query, {"clueId": user[3]})
+        clue = self.cursor.fetchone()
+        print(clue)
+        clue_time = datetime.datetime.fromtimestamp(clue[2])
+        current_time = datetime.datetime.now()
+        if current_time > clue_time:
+            return clue[1]
+        else:
+            return "You cannot get the clue"
