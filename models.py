@@ -144,3 +144,24 @@ class Database:
             return clue[3]
         else:
             return "You cannot get the clue"
+
+    def check_ans(self, username, answer):
+        """checks if the ans given by the user is correct,
+        will return correct_toast/ wrong_toast appropriately"""
+        # find the user
+        user = self.find_user(username)
+        query = "SELECT * FROM clues WHERE clue_id=:clueId"
+        self.cursor.execute(query, {"clueId": user[3]})
+        clue = self.cursor.fetchone()
+        print(clue)
+        clue_time = datetime.datetime.fromtimestamp(clue[2])
+        current_time = datetime.datetime.now()
+        if current_time > clue_time:
+            # user is answering question after the question is out
+            if answer == clue[7]:
+                return clue[5]
+            else:
+                return clue[6]
+        else:
+            # user answering question before the question is out
+            return "oombu"

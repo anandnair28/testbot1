@@ -50,32 +50,41 @@ async def on_message(message):
     #     else:
     #         await message.channel.send(data["next_stage_toast"])
 
-    if message.content.startswith("$ans"):
+    if message.content.startswith("$ans "):
+        ans = message.content.split(" ")
+        # check if the ans is of the correct format
+        print(ans)
+        if len(ans) == 2 and ans[0] == "$ans":
+            # ans is of the correct format
+            res = db.check_ans(str(message.author), ans[1])
+            await message.channel.send(res)
 
-        ans_words = message.content.split(" ")
-        answerid = users.get(str(message.author), 0)
+    # if message.content.startswith("$ans"):
 
-        if answerid >= len(data["answers"]):
-            await message.channel.send(data["next_stage_toast"])
+    #     ans_words = message.content.split(" ")
+    #     answerid = users.get(str(message.author), 0)
 
-        elif len(ans_words) != 2 or ans_words[0] != "$ans":
-            await message.channel.send(data["wrong_format_toast"])
+    #     if answerid >= len(data["answers"]):
+    #         await message.channel.send(data["next_stage_toast"])
 
-        else:
-            if ans_words[1] == data["answers"][answerid]:
-                users[str(message.author)] = users.get(str(message.author), 0) + 1
-                with open("userdata.json", "w") as outfile:
-                    json.dump(users, outfile)
-                await message.channel.send(data["correct_answer_toast"])
+    #     elif len(ans_words) != 2 or ans_words[0] != "$ans":
+    #         await message.channel.send(data["wrong_format_toast"])
 
-                if answerid < len(data["answers"]) - 1:
-                    await message.channel.send(data["next_clue_toast"])
+    #     else:
+    #         if ans_words[1] == data["answers"][answerid]:
+    #             users[str(message.author)] = users.get(str(message.author), 0) + 1
+    #             with open("userdata.json", "w") as outfile:
+    #                 json.dump(users, outfile)
+    #             await message.channel.send(data["correct_answer_toast"])
 
-                else:
-                    await message.channel.send(data["next_stage_toast"])
+    #             if answerid < len(data["answers"]) - 1:
+    #                 await message.channel.send(data["next_clue_toast"])
 
-            else:
-                await message.channel.send(data["wrong_answer_toast"])
+    #             else:
+    #                 await message.channel.send(data["next_stage_toast"])
+
+    #         else:
+    #             await message.channel.send(data["wrong_answer_toast"])
 
 
 client.run(os.getenv("TOKEN"))
