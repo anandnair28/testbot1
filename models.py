@@ -9,6 +9,8 @@ from sqlite3.dbapi2 import Error
 
 DB_NAME = "festemberHunt21.db"
 
+QUIZ_COMPLETED_TOAST = "You have already completed the hunt. chill"
+
 # TODO: Add first person to ans the question toast
 # * Add method to prevent ppl who have completed the hunt from receiving hints and clues
 class Database:
@@ -114,15 +116,24 @@ class Database:
         self.conn.commit()
         return print("Added a clue to the db with the row no, ", self.cursor.lastrowid)
 
+    def get_single_clue(self, username):
+        """Gets the user's current clue, or returns None if the user has completed the quiz"""
+        user = self.find_user(username)
+        query = "SELECT * FROM clues WHERE clue_id=:clueId"
+        if user[3] == 0:
+            # if the user completed the quiz, so return None
+            return None
+        self.cursor.execute(query, {"clueId": user[3]})
+        clue = self.cursor.fetchone()
+        return clue
+
     def get_clue(self, username):
         """get the clue for the current question from the database,
         and returns the clue as a string"""
         # find the user
-        user = self.find_user(username)
-        query = "SELECT * FROM clues WHERE clue_id=:clueId"
-        self.cursor.execute(query, {"clueId": user[3]})
-        clue = self.cursor.fetchone()
-        print(clue)
+        clue = self.get_single_clue(username)
+        if clue == None:
+            return QUIZ_COMPLETED_TOAST
         clue_time = datetime.datetime.fromtimestamp(clue[2])
         current_time = datetime.datetime.now()
         if current_time > clue_time:
@@ -134,11 +145,9 @@ class Database:
         """get the hint for the current question from the database,
         and returns the hint as a string"""
         # find the user
-        user = self.find_user(username)
-        query = "SELECT * FROM clues WHERE clue_id=:clueId"
-        self.cursor.execute(query, {"clueId": user[3]})
-        clue = self.cursor.fetchone()
-        print(clue)
+        clue = self.get_single_clue(username)
+        if clue == None:
+            return QUIZ_COMPLETED_TOAST
         hint_time = datetime.datetime.fromtimestamp(clue[4])
         current_time = datetime.datetime.now()
         if current_time > hint_time:
@@ -150,17 +159,15 @@ class Database:
         """checks if the ans given by the user is correct,
         will return correct_toast/ wrong_toast appropriately"""
         # find the user
-        user = self.find_user(username)
-        query = "SELECT * FROM clues WHERE clue_id=:clueId"
-        self.cursor.execute(query, {"clueId": user[3]})
-        clue = self.cursor.fetchone()
-        print(clue)
+        clue = self.get_single_clue(username)
+        if clue == None:
+            return QUIZ_COMPLETED_TOAST
         clue_time = datetime.datetime.fromtimestamp(clue[2])
         current_time = datetime.datetime.now()
         if current_time > clue_time:
             # user is answering question after the question is out
             if answer == clue[7]:
-                self.update_user_current_clue(username, user[3] + 1)
+                self.update_user_current_clue(username, clue[0] + 1)
                 return clue[5]
             else:
                 return clue[6]
@@ -170,8 +177,12 @@ class Database:
 
     def update_user_current_clue(self, username, clue_no):
         """updates the question number for the given username to the given number"""
-        print("Updating the user's current clue")
+        print("Updating the user's current clue to", clue_no)
+        # checking if the user has completed the quiz,
+        # if yes, we set the clue to 0 in users table
+        self.cursor.execute("SELECT COUNT(*) FROM clues")
+        n = self.cursor.fetchone()
+        if clue_no > n:
+            clue_no = 0
         query = "UPDATE users SET clue = ? WHERE name =?"
         self.cursor.execute(query, (clue_no, username))
-        user = self.find_user(username)
-        print("the updated user is", user)
