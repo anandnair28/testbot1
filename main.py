@@ -11,10 +11,6 @@ client = discord.Client()
 data_file = open("data.json")
 data = json.load(data_file)
 
-userdata_file = open("userdata.json")
-users = json.load(userdata_file)
-userdata_file.close()
-
 db = Database()
 
 
@@ -35,6 +31,9 @@ async def on_message(message):
     if message.content.startswith("$clue"):
         clue = db.get_clue(str(message.author))
         await message.channel.send(clue)
+    if message.content.startswith("$hint"):
+        hint = db.get_hint(str(message.author))
+        await message.channel.send(hint)
 
     if message.content.startswith("$hello"):
         intro_text = data["intro"].format(str(message.author))

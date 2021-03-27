@@ -128,3 +128,19 @@ class Database:
             return clue[1]
         else:
             return "You cannot get the clue"
+
+    def get_hint(self, username):
+        """get the hint for the current question from the database,
+        and returns the hint as a string"""
+        # find the user
+        user = self.find_user(username)
+        query = "SELECT * FROM clues WHERE clue_id=:clueId"
+        self.cursor.execute(query, {"clueId": user[3]})
+        clue = self.cursor.fetchone()
+        print(clue)
+        hint_time = datetime.datetime.fromtimestamp(clue[4])
+        current_time = datetime.datetime.now()
+        if current_time > hint_time:
+            return clue[3]
+        else:
+            return "You cannot get the clue"
