@@ -1,8 +1,8 @@
 {
   "clues" : [
-    "Answer is CHARLIE\nEnter your answer as $ans <ANSWER HERE>",
-    "Answer is CYPHER\nEnter your answer as $ans <ANSWER HERE>",
-    "Answer is FESTEMBER\nEnter your answer as $ans <ANSWER HERE>"
+    "Answer is CHARLIE||Enter your answer as $ans <ANSWER HERE>||images/test.png||files/book.pdf",
+    "Answer is CYPHER||files/audio.wav||Enter your answer as $ans <ANSWER HERE>",
+    "Answer is FESTEMBER||Enter your answer as $ans <ANSWER HERE>||https://www.youtube.com/watch?v=wFbioZJX3C0"
   ],
   "answers" : [
     "CHARLIE",

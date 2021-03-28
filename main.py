@@ -1,17 +1,6 @@
 import discord
 import os
 import json
-import psycopg2
-
-DATABASE_URL = os.getenv('DATABASE_URL')
-
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-
-curr = conn.cursor()
-
-curr.execute('''CREATE TABLE IF NOT EXISTS users ( 
-  user_id varchar ( 50 ) primary key, 
-  score int );''')
 
 client = discord.Client()
 
@@ -31,30 +20,25 @@ async def on_message(message):
 
     if message.author == client.user:
         return
-    
-    else:
-        curr.execute("INSERT INTO users VALUES ('{0}', 0) ON CONFLICT DO NOTHING;".format(str(message.author)))
 
-    if message.content.startswith('$leaderboard'):
-        curr.execute("SELECT * from users;")
-        await message.channel.send(str(curr.fetchall()))
-
-    if message.content.startswith('$hello'):
-        intro_text = data["intro"].format(str(message.author))
-        await message.channel.send(intro_text)
-        await message.channel.send(file=discord.File('thtest.png'))
-
-    if message.content.startswith('$clue'):
+    if message.content.startswith('$cluetest'):
         
         clueid = users.get(str(message.author), 0)
         
         if clueid < 3:
-          await message.channel.send(data["clues"][clueid])
+          cluestring = data["clues"][clueid]
+          for element in cluestring.split('||'):
+            if element.startswith('images/'):
+              await message.channel.send(file=discord.File(element))
+            elif element.startswith('files/'):
+              await message.channel.send(file=discord.File(element))
+            else:
+              await message.channel.send(element)
         
         else:
           await message.channel.send(data["next_stage_toast"])
     
-    if message.content.startswith('$ans'):
+    if message.content.startswith('$anstest'):
         
         ans_words = message.content.split(' ')
         answerid = users.get(str(message.author), 0)
@@ -62,7 +46,7 @@ async def on_message(message):
         if answerid >= len(data["answers"]):
             await message.channel.send(data["next_stage_toast"])
         
-        elif len(ans_words) != 2 or ans_words[0] != "$ans":
+        elif len(ans_words) != 2 or ans_words[0] != "$anstest":
             await message.channel.send(data["wrong_format_toast"])
           
         else:
