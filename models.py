@@ -23,7 +23,7 @@ class Database:
             conn = sqlite3.connect(DB_NAME)
             c = conn.cursor()
             c.execute(
-                "SELECT name FROM sqlite_master WHERE type='table' AND name in ('users', 'score', 'clues');"
+                "SELECT name FROM sqlite_master WHERE type='table' AND name in ('users', 'hints', 'clues');"
             )
             r = c.fetchall()
             # print(r)
@@ -49,21 +49,19 @@ class Database:
                 """CREATE TABLE IF NOT EXISTS clues (
                 clue_id integer PRIMARY KEY,
                 clue text,
-                clue_time timestamp,
-                hint text,
-                hint_time timestamp,
-                correct_toast text,
-                wrong_toast text,
-                answer text
+                answer text,
+                story_start text,
+                story_continue text
             );"""
             )
             print("Created clues table")
             c.execute(
-                """CREATE TABLE IF NOT EXISTS score (
-				score_id integer PRIMARY KEY,
-                user_id integer NOT NULL,
-				score integer,
-				FOREIGN KEY (user_id) REFERENCES users (id)
+                """CREATE TABLE IF NOT EXISTS  hints(
+				hint_id integer PRIMARY KEY,
+                clue_id integer NOT NULL,
+				hint_no integer,
+                hint text,
+				FOREIGN KEY (clue_id) REFERENCES clues (clue_id)
 				);"""
             )
             print("created score table")
@@ -111,18 +109,30 @@ class Database:
         """add clues to the db,clue object must be of the type
             clue : {
             "clue": string,
-            "clue_time": timestamp,
-            "hint": string,
-            "hint_time": timestamp,
-            "correct_toast": string,
-            "wrong_toast": string,
-            "answer": string
+            "answer": string,
+            "story_start": string,
+            "story_continue": string,
+            "hints": [
+                "hints"
+            ]
         },"""
-        query = "INSERT INTO clues(clue, clue_time, hint, hint_time, correct_toast, wrong_toast, answer) \
-        VALUES (:clue, :clue_time, :hint, :hint_time, :correct_toast, :wrong_toast, :answer)"
+        query = "INSERT INTO clues(clue, answer, story_start, story_continue) \
+        VALUES (:clue, :answer, :story_start, :story_continue)"
         self.cursor.execute(query, clue)
         self.conn.commit()
-        return print("Added a clue to the db with the row no, ", self.cursor.lastrowid)
+        print("Added a clue to the db with the row no, ", self.cursor.lastrowid)
+        clue_id = self.cursor.lastrowid
+        print("Adding hints for the clues")
+        for hint_no, hint in enumerate(clue["hints"]):
+            self.add_hints(hint, hint_no, clue_id)
+
+    def add_hints(self, hint, hint_no, clue_id):
+        """Adds hints to the database for the given clue"""
+        query = "INSERT INTO hints(clue_id, hint_no, hint) \
+            VALUES(?, ?, ?)"
+        self.cursor.execute(query, (clue_id, hint_no, hint))
+        self.conn.commit()
+        return
 
     def get_single_clue(self, username):
         """Gets the user's current clue, or returns None if the user has completed the quiz"""

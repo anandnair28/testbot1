@@ -1,30 +1,42 @@
 [
   {
-    "story" : "heshs",
-    "clue": "this is the first clue",
-    "clue_time": 1616838580.842228,
-    "hint_time": 1616838580.842228,
-    "hint": "1st hint",
-    "correct_toast": "correct ans for question 1",
-    "wrong_toast": "wrong ans",
-    "answer": "one"
+    "clue": "A previous Festember Theme||https://www.youtube.com/watch?v=wFbioZJX3C0",
+    "answer": "wildwest",
+    "story_start": "A mysterious drive seems to offer a clue to the lost trophy. With no options remaining, Noah decides to try and solve the path offered by the drive. A video seems to hold the answer to the location. What has Toy Story got to do with the trophy?",
+    "story_continue": "The screen goes blank once Noah enters the answer. Noah starts to panic, wondering if his search has come to an end. Suddenly, an input field appears on screen. The clue awaits.",
+    "hints": [
+      "A million ways to die in the ____",
+      "American Frontier (Answer length: 8 characters)"
+    ]
   },
   {
-    "clue": "this is the second clue",
-    "clue_time": 1616838580.842228,
-    "hint_time": 1617079210.0,
-    "hint": "2nd hint",
-    "correct_toast": "correct ans for question 2",
-    "wrong_toast": "wrong ans",
-    "answer": "two"
+    "clue": "files/clue2.wav",
+    "answer": "charliechaplin",
+    "story_start": "An audio clip starts playing, a periodic cycle of beeps. After recollecting himself, Noah tries to ascertain a possible pattern from the arbitrary beeps. A bulb lights up in his head and Noah rushes to unravel the cipher.",
+    "story_continue": "An ode to Chaplin and a trip to the Wild West. The clues don't seem to have a discernible pattern or an end in sight. Noah struggles to keep himself awake, fighting drowsiness so that he can figure out the location of the trophy. How does Charlie Chaplin connect with Festember? Drama, monologue, stand-up? Mime! The obvious choice. According to the schedule, the mime event should be happening the next day at 9 AM. Since the clues seem to relate to Festember events, Noah decides to check out the F’19 aftermovie to gain a quick insight into the fest. With his reserve energy completely out, Noah finally succumbs to his comfortable bed and awaits the mystery of the next day.||Do watch the Festember '19 Aftermovie||https://www.youtube.com/watch?v=NlOfAO2kYFQ&ab_channel=FestemberNITTrichy",
+    "hints": [
+      "Dots and Dashes! What hath God wrought?",
+      "-.-. .... .- .-. .-.. .. . -.-. .... .- .--. .-.. .. -.\n(Answer length: 14 characters)"
+    ]
   },
   {
-    "clue": "this is the third clue",
-    "clue_time": 1617079210.0,
-    "hint_time": 1617079210.0,
-    "hint": "third hint",
-    "correct_toast": "correct ans for&& question 3||test.pg",
-    "wrong_toast": "wrong ans",
-    "answer": "three"
+    "clue": "He finds the application and a text saying “Escape the room”. He also finds an input box for the answer.||files/clue3.png",
+    "answer": "jamesbond",
+    "story_start": "The five consecutive alarms fail to awake Noah, but a swift kick from his roommate does the trick. With a quick 10-minutes-before-class-starts-morning-routine, Noah readies himself for a day of wonder. The missing trophy finally registers in his head, and a quick sweep through the team Whatsapp groups reveals that the trophy remains at large. Remembering the previous clue he received, Noah heads onto the Mime event, hoping the end of this peculiar hunt arrives soon. At the EEE Audi, he takes up a seat at the backend of the hall and finds an abandoned laptop that was ON. An application was running, some sort of game. Curiosity getting the better of him, he checks it out.",
+    "story_continue": "The application changes the screen and displays a prompt.\n\"Congratulations! Your escape shall lead you to the missing trophy. Good progress has been made, but time continues to tick away. Your next destination awaits. And to make things more interesting, let’s add a time limit of half an hour for you to pinpoint the next clue. Tick Tock; the trophy strays further away\"\nOf course, there would be a time limit. It didn’t seem like the rogue plans to make things easy. But there was another puzzling aspect; James Bond wasn’t related to anything in the fest. Or wait, could it be? He remembers that there was an informal event - an escape room was occurring near CCD. He grabs his cycle and rushes to the late-night hangout spot.",
+    "hints": [
+      "files/clue3_hint1.png",
+      "Answer Length: 9 characters"
+    ]
+  },
+  {
+    "clue": "files/clue4.png",
+    "answer": "pinkfloyd",
+    "story_start": "The aroma of coffee reminds Noah that hunger had been gnawing at him since morning. The clues had not let him take a breather and the added time frame only made matters worse. He rushes upstairs to inquire at the Escape Room registration desk for any possible clues. To his surprise, the pair manning the desk had an envelope for a Festember team member. Noah collects the envelope and heads to the food stalls, hunger getting the better of him. As he munches down a waffle, he opens the envelope to reveal his next clue.",
+    "story_continue": "Breathe, breathe in the air. Maybe a break isn’t a bad idea. But with only three nights remaining, time is of the essence. Pink Floyd?  What’s the thread connecting the dots? Rock Night! A massive hall filled with thousands of enchanted people, while bands etched their music on everyone’s soul. Noah remains dazed at the sheer size of the task ahead of him. How was he supposed to find the next clue among all the people at GJCH?",
+    "hints": [
+      "Wish You Were Here",
+      "Answer Length: 9 characters"
+    ]
   }
 ]
