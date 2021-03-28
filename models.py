@@ -12,7 +12,6 @@ DB_NAME = "festemberHunt21.db"
 QUIZ_COMPLETED_TOAST = "You have already completed the hunt. chill"
 
 # TODO: Add first person to ans the question toast
-# * Add method to prevent ppl who have completed the hunt from receiving hints and clues
 class Database:
     """ Used to do crud operations on the db"""
 
@@ -37,7 +36,13 @@ class Database:
 				user_id integer PRIMARY KEY,
 				name text NOT NULL, 
 				time_joined timestamp,
-				clue integer);"""
+                current_clue integer NOT NULL,
+                last_solved integer NOT NULL,
+                last_solved_time timestamp,
+                last_attempted_time timestamp,
+                attempts integer NOT NULL,
+                lasthint_used_time timestamp
+				);"""
             )
             print("Created users table")
             c.execute(
@@ -74,8 +79,11 @@ class Database:
         try:
             print("Inserting a person with the username, ", name)
             time = datetime.datetime.now()
-            query = "INSERT INTO users(name, time_joined, clue) VALUES(?,?,?)"
-            self.cursor.execute(query, (name, datetime.datetime.timestamp(time), 1))
+            query = "INSERT INTO users( \
+                name, time_joined, current_clue, last_solved, last_solved_time, \
+                last_attempted_time, attempts, lasthint_used_time\
+                ) VALUES (?,?,0, 0, null, null, 0, null)"
+            self.cursor.execute(query, (name, datetime.datetime.timestamp(time)))
             self.conn.commit()
             print("Created a user with the id:", self.cursor.lastrowid)
             self.cursor.execute(
@@ -153,7 +161,7 @@ class Database:
         if current_time > hint_time:
             return clue[3]
         else:
-            return "You cannot get the clue"
+            return "wait for some more time before getting the hint"
 
     def check_ans(self, username, answer):
         """checks if the ans given by the user is correct,
@@ -173,7 +181,7 @@ class Database:
                 return clue[6]
         else:
             # user answering question before the question is out
-            return "oombu"
+            return "too fast, wait for sometime"
 
     def update_user_current_clue(self, username, clue_no):
         """updates the question number for the given username to the given number"""
@@ -182,7 +190,7 @@ class Database:
         # if yes, we set the clue to 0 in users table
         self.cursor.execute("SELECT COUNT(*) FROM clues")
         n = self.cursor.fetchone()
-        if clue_no > n:
+        if clue_no > n[0]:
             clue_no = 0
         query = "UPDATE users SET clue = ? WHERE name =?"
         self.cursor.execute(query, (clue_no, username))

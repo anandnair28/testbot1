@@ -26,6 +26,7 @@ async def on_message(message):
         print(message.author)
         print(str(message.author))
         res = db.find_user(str(message.author))
+        print(res)
         await message.channel.send(res)
     # if message.content.startswith('$leaderboard'):
     if message.content.startswith("$clue"):
@@ -36,8 +37,8 @@ async def on_message(message):
         await message.channel.send(hint)
 
     if message.content.startswith("$hello"):
-        intro_text = data["intro"].format(str(message.author))
-        await message.channel.send(intro_text)
+        # intro_text = data["intro"].format(str(message.author))
+        # await message.channel.send(intro_text)
         await message.channel.send(file=discord.File("thtest.png"))
 
     # if message.content.startswith("$clue"):
