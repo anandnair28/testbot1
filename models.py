@@ -2,16 +2,11 @@ import sqlite3
 import datetime
 from sqlite3.dbapi2 import Error
 
-# def init_db():
-#   conn = sqlite3.connect("festemberHunt21")
-#   return con
-
-
 DB_NAME = "festemberHunt21.db"
 
 QUIZ_COMPLETED_TOAST = "You have already completed the hunt. chill"
 
-# TODO: Add first person to ans the question toast
+
 class Database:
     """ Used to do crud operations on the db"""
 
@@ -41,6 +36,7 @@ class Database:
                 last_solved_time timestamp,
                 last_attempted_time timestamp,
                 attempts integer NOT NULL,
+                hints_used integer NOT NULL,
                 lasthint_used_time timestamp
 				);"""
             )
@@ -79,8 +75,8 @@ class Database:
             time = datetime.datetime.now()
             query = "INSERT INTO users( \
                 name, time_joined, current_clue, last_solved, last_solved_time, \
-                last_attempted_time, attempts, lasthint_used_time\
-                ) VALUES (?,?,0, 0, null, null, 0, null)"
+                last_attempted_time, attempts,hints_used, lasthint_used_time\
+                ) VALUES (?,?,0, 0, null, null, 0, 0, null)"
             self.cursor.execute(query, (name, datetime.datetime.timestamp(time)))
             self.conn.commit()
             print("Created a user with the id:", self.cursor.lastrowid)
@@ -124,7 +120,7 @@ class Database:
         clue_id = self.cursor.lastrowid
         print("Adding hints for the clues")
         for hint_no, hint in enumerate(clue["hints"]):
-            self.add_hints(hint, hint_no, clue_id)
+            self.add_hints(hint, hint_no + 1, clue_id)
 
     def add_hints(self, hint, hint_no, clue_id):
         """Adds hints to the database for the given clue"""
@@ -135,29 +131,60 @@ class Database:
         return
 
     def get_single_clue(self, username):
-        """Gets the user's current clue, or returns None if the user has completed the quiz"""
+        """Gets the user's current clue, has seen clue, hints_used, attempts"""
         user = self.find_user(username)
         query = "SELECT * FROM clues WHERE clue_id=:clueId"
+        print(user)
         if user[3] == 0:
-            # if the user completed the quiz, so return None
-            return None
+            # user is yet to start the quiz, ask him to say hello
+            return (None,) * 4
+        elif user[3] == 50:
+            # user has finished the quiz,
+            return (-1,) + (None,) * 3
         self.cursor.execute(query, {"clueId": user[3]})
         clue = self.cursor.fetchone()
-        return clue
+
+        # is user[3] == user[4] => he has not viewed the clue
+        return clue, user[3] == user[4], user[8], user[7]
+
+    def update_current_clue(self, username, current_clue):
+        """Updates the current clue of the user"""
+        self.cursor.execute("SELECT COUNT(*) FROM clues")
+        n = self.cursor.fetchone()
+        print("No of clues is :", n[0])
+        if current_clue > n[0]:
+            # user has finished the quiz
+            current_clue = 50  # setting clue to random no
+
+        query = "UPDATE users SET current_clue = ? WHERE name =?"
+        self.cursor.execute(query, (current_clue, username))
+        self.conn.commit()
+
+    def start_hunt(self, username):
+        """Returns a if the user is starting the hunt or not"""
+        clue, _, _, _ = self.get_single_clue(username)
+        if clue == None:
+            print(username, "has started the hunt")
+            self.update_current_clue(username, 1)
+            return True
+        return False
 
     def get_clue(self, username):
         """get the clue for the current question from the database,
         and returns the clue as a string"""
         # find the user
-        clue = self.get_single_clue(username)
+        clue, firstTime, _, _ = self.get_single_clue(username)
         if clue == None:
+            return "BEGIN QUIZ BEFORE ANSWERING THE QUESTION"
+        if clue == -1:
             return QUIZ_COMPLETED_TOAST
-        clue_time = datetime.datetime.fromtimestamp(clue[2])
-        current_time = datetime.datetime.now()
-        if current_time > clue_time:
-            return clue[1]
+        if firstTime or clue[0] == 1:
+            print("first time viewing the clue")
+            self.update_current_clue(username, clue[0])
+            return clue[3] + "||" + clue[1]
         else:
-            return "You cannot get the clue"
+            print("viewing the clue again")
+            return clue[1]
 
     def get_hint(self, username):
         """get the hint for the current question from the database,

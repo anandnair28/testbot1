@@ -40,6 +40,12 @@ async def on_message(message):
         # intro_text = data["intro"].format(str(message.author))
         # await message.channel.send(intro_text)
         await message.channel.send(file=discord.File("thtest.png"))
+        if db.start_hunt(str(message.author)):
+            await message.channel.send("This is the intro message")
+            await message.channel.send("This is the help message")
+            await message.channel.send("print $clue to start")
+        else:
+            await message.channel.send("not viewing for first time, say smth else")
 
     # if message.content.startswith("$clue"):
 
