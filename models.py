@@ -1,10 +1,28 @@
 import sqlite3
-import datetime
+from datetime import datetime
 from sqlite3.dbapi2 import Error
+from utils import compare_time
+
+# TODO: BUG CHECK IF USER VIEWED CLUE FOR 1ST QUESTION
+# TODO: ADD FEATURE TO SEND WAIT TIME BEFORE VIEWING A CLUE
+
+# TODO: add logs for everything, to make life easier
 
 DB_NAME = "festemberHunt21.db"
 
 QUIZ_COMPLETED_TOAST = "You have already completed the hunt. chill"
+
+START_QUIZ_BEFORE_ASKING_FOR_CLUES_AND_HINTS_TOAST = (
+    "start the quiz before asking for clues and answers"
+)
+
+VIEW_CLUE_BEFORE_VIEWING_HINT_TOAST = "view clue before viewing hint"
+
+VIEWED_ALL_THE_HINTS_TOAST = "you have viewed all the hints"
+
+HINT_AFTER_CLUE_COUNTDOWN = 30
+
+CANNOT_VIEW_HINT_JUST_YET_TOAST = "wait for sometime before viewing the clue"
 
 
 class Database:
@@ -37,7 +55,7 @@ class Database:
                 last_attempted_time timestamp,
                 attempts integer NOT NULL,
                 hints_used integer NOT NULL,
-                lasthint_used_time timestamp
+                last_hint_used_time timestamp
 				);"""
             )
             print("Created users table")
@@ -72,12 +90,11 @@ class Database:
         """adds user to db and"""
         try:
             print("Inserting a person with the username, ", name)
-            time = datetime.datetime.now()
             query = "INSERT INTO users( \
                 name, time_joined, current_clue, last_solved, last_solved_time, \
-                last_attempted_time, attempts,hints_used, lasthint_used_time\
+                last_attempted_time, attempts,hints_used, last_hint_used_time\
                 ) VALUES (?,?,0, 0, null, null, 0, 0, null)"
-            self.cursor.execute(query, (name, datetime.datetime.timestamp(time)))
+            self.cursor.execute(query, (name, datetime.now().timestamp()))
             self.conn.commit()
             print("Created a user with the id:", self.cursor.lastrowid)
             self.cursor.execute(
@@ -100,6 +117,12 @@ class Database:
             print("Such a user doesn't exist")
             return self.add_user(name)
         return result
+
+    def get_user_time_stamps(self, username):
+        """Returns all the time stamps of the user
+        (time_joined, last_solved_time, last_attempted_time, last_hint_used_time)"""
+        user = self.find_user(username)
+        return user[2], user[5], user[6], user[9]
 
     def add_clues(self, clue):
         """add clues to the db,clue object must be of the type
@@ -160,6 +183,14 @@ class Database:
         self.cursor.execute(query, (current_clue, username))
         self.conn.commit()
 
+    def update_hint_and_last_hint_used_time(self, username, new_hint):
+        """Updates the hints_used and last_hint_used_time of a user"""
+        query = (
+            "UPDATE users SET last_hint_used_time = ?, hints_used = ? WHERE name = ?"
+        )
+        self.cursor.execute(query, (datetime.now().timestamp(), new_hint, username))
+        return self.conn.commit()
+
     def start_hunt(self, username):
         """Returns a if the user is starting the hunt or not"""
         clue, _, _, _ = self.get_single_clue(username)
@@ -173,12 +204,12 @@ class Database:
         """get the clue for the current question from the database,
         and returns the clue as a string"""
         # find the user
-        clue, firstTime, _, _ = self.get_single_clue(username)
+        clue, first_time, _, _ = self.get_single_clue(username)
         if clue == None:
-            return "BEGIN QUIZ BEFORE ANSWERING THE QUESTION"
+            return START_QUIZ_BEFORE_ASKING_FOR_CLUES_AND_HINTS_TOAST
         if clue == -1:
             return QUIZ_COMPLETED_TOAST
-        if firstTime or clue[0] == 1:
+        if first_time or clue[0] == 1:
             print("first time viewing the clue")
             self.update_current_clue(username, clue[0])
             return clue[3] + "||" + clue[1]
@@ -190,15 +221,51 @@ class Database:
         """get the hint for the current question from the database,
         and returns the hint as a string"""
         # find the user
-        clue = self.get_single_clue(username)
+        clue, first_time, hints_used, _ = self.get_single_clue(username)
+        (
+            time_joined,
+            last_solved_time,
+            last_attempted_time,
+            last_hint_used_time,
+        ) = self.get_user_time_stamps(username)
         if clue == None:
+            return START_QUIZ_BEFORE_ASKING_FOR_CLUES_AND_HINTS_TOAST
+        if clue == -1:
             return QUIZ_COMPLETED_TOAST
-        hint_time = datetime.datetime.fromtimestamp(clue[4])
-        current_time = datetime.datetime.now()
-        if current_time > hint_time:
-            return clue[3]
+        if first_time:
+            return VIEW_CLUE_BEFORE_VIEWING_HINT_TOAST
+
+        # find all hints for the given clue
+        self.cursor.execute("SELECT * FROM hints WHERE clue_id=?", (clue[0],))
+        hints = self.cursor.fetchall()
+        if hints_used >= len(hints):
+            return VIEWED_ALL_THE_HINTS_TOAST
+
+        if hints_used == 0:
+            # user wants to see the first hint
+            if clue[0] == 1:
+                # user is currently in first clue so, compare with time_joined,
+                # .   to verify if he can view the clue
+                if compare_time(time_joined, HINT_AFTER_CLUE_COUNTDOWN):
+                    self.update_hint_and_last_hint_used_time(username, 1)
+                    return hints[0][3]
+                else:
+                    return CANNOT_VIEW_HINT_JUST_YET_TOAST
+            else:
+                # user is viewing >1 clue,
+                # . so compare with the last_solved_time
+                if compare_time(last_solved_time, HINT_AFTER_CLUE_COUNTDOWN):
+                    self.update_hint_and_last_hint_used_time(username, hints_used + 1)
+                    return hints[hints_used][3]
+                else:
+                    return CANNOT_VIEW_HINT_JUST_YET_TOAST
         else:
-            return "wait for some more time before getting the hint"
+            # user has already viewed all a hint, so compare with last_hint_time
+            if compare_time(last_hint_used_time, HINT_AFTER_CLUE_COUNTDOWN):
+                self.update_hint_and_last_hint_used_time(username, hints_used + 1)
+                return hints[hints_used][3]
+            else:
+                return CANNOT_VIEW_HINT_JUST_YET_TOAST
 
     def check_ans(self, username, answer):
         """checks if the ans given by the user is correct,
@@ -207,8 +274,8 @@ class Database:
         clue = self.get_single_clue(username)
         if clue == None:
             return QUIZ_COMPLETED_TOAST
-        clue_time = datetime.datetime.fromtimestamp(clue[2])
-        current_time = datetime.datetime.now()
+        clue_time = datetime.fromtimestamp(clue[2])
+        current_time = datetime.now()
         if current_time > clue_time:
             # user is answering question after the question is out
             if answer == clue[7]:
