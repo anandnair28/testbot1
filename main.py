@@ -13,6 +13,21 @@ data = json.load(data_file)
 
 db = Database()
 
+WRONG_FORMAT_TOAST = (
+    "The command you entered is not valid||Enter $help to view valid commands"
+)
+HELP_TOAST = "`$hello`: _To get hello reply from bot_||\
+    `$clue`: _To get your next clue_||\
+    `$ans<SPACE>your_answer_here`: _To enter answer after viewing clue_||\
+    `$hint`: _To get a hint for your current clue_"
+
+HELLO_MESSAGE = (
+    "Hello there, welcome to treasure hunt, enter $clue to start your journey"
+)
+
+
+HELLO_AGAIN_MESSAGE = "Hello again, why are you wasting your time ?"
+
 
 @client.event
 async def on_ready():
@@ -22,42 +37,11 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-    # if message.content.startswith("$sup"):
-    #     print(message.author)
-    #     print(str(message.author))
-    #     res = db.find_user(str(message.author))
-    #     print(res)
-    #     await message.channel.send(res)
-    # if message.content.startswith('$leaderboard'):
-    if message.content.startswith("$clue"):
-        clue = db.get_clue(str(message.author))
-        await send_message(clue, message)
-        # await message.channel.send(clue)
-    if message.content.startswith("$hint"):
-        hint = db.get_hint(str(message.author))
-        await send_message(hint, message)
-        # await message.channel.send(hint)
+    # retrun if the bot is sending command
+    if message.author == client.user:
+        return
 
-    if message.content.startswith("$hello"):
-        # intro_text = data["intro"].format(str(message.author))
-        # await message.channel.send(intro_text)
-        await message.channel.send(file=discord.File("thtest.png"))
-        if db.start_hunt(str(message.author)):
-            await message.channel.send("This is the intro message")
-            await message.channel.send("This is the help message")
-            await message.channel.send("print $clue to start")
-        else:
-            await message.channel.send("not viewing for first time, say smth else")
-
-    # if message.content.startswith("$clue"):
-
-    #     clueid = users.get(str(message.author), 0)
-
-    #     if clueid < 3:
-    #         await message.channel.send(data["clues"][clueid])
-
-    #     else:
-    #         await message.channel.send(data["next_stage_toast"])
+    print(message.content, " - ", str(message.author))
 
     if message.content.startswith("$ans "):
         ans = message.content.split(" ")
@@ -67,34 +51,28 @@ async def on_message(message):
             # ans is of the correct format
             res = db.check_ans(str(message.author), ans[1])
             await send_message(res, message)
-            # await message.channel.send(res)
+        else:
+            await send_message(WRONG_FORMAT_TOAST, message)
 
-    # if message.content.startswith("$ans"):
+    elif message.content == "$clue":
+        clue = db.get_clue(str(message.author))
+        await send_message(clue, message)
 
-    #     ans_words = message.content.split(" ")
-    #     answerid = users.get(str(message.author), 0)
+    elif message.content == "$hint":
+        hint = db.get_hint(str(message.author))
+        await send_message(hint, message)
 
-    #     if answerid >= len(data["answers"]):
-    #         await message.channel.send(data["next_stage_toast"])
+    elif message.content == "$hello":
+        if db.start_hunt(str(message.author)):
+            await send_message(HELLO_MESSAGE, message)
+        else:
+            await send_message(HELLO_AGAIN_MESSAGE, message)
 
-    #     elif len(ans_words) != 2 or ans_words[0] != "$ans":
-    #         await message.channel.send(data["wrong_format_toast"])
+    elif message.content == "$help":
+        await send_message(HELP_TOAST, message)
 
-    #     else:
-    #         if ans_words[1] == data["answers"][answerid]:
-    #             users[str(message.author)] = users.get(str(message.author), 0) + 1
-    #             with open("userdata.json", "w") as outfile:
-    #                 json.dump(users, outfile)
-    #             await message.channel.send(data["correct_answer_toast"])
-
-    #             if answerid < len(data["answers"]) - 1:
-    #                 await message.channel.send(data["next_clue_toast"])
-
-    #             else:
-    #                 await message.channel.send(data["next_stage_toast"])
-
-    #         else:
-    #             await message.channel.send(data["wrong_answer_toast"])
+    else:
+        await send_message(WRONG_FORMAT_TOAST, message)
 
 
 async def send_message(message_string, message):
