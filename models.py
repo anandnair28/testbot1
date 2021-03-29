@@ -42,6 +42,7 @@ class Database:
 
     def __init__(self):
         self.conn, self.cursor = self.init_db()
+        self.total_clues = self.get_total_clues()
 
     def init_db(self):
         try:
@@ -203,6 +204,12 @@ class Database:
         self.conn.commit()
         return
 
+    def get_total_clues(self):
+        """Finds the number of clues"""
+        self.cursor.execute("SELECT COUNT(*) FROM clues")
+        n = self.cursor.fetchone()
+        return n[0]
+
     def get_single_clue(self, username):
         """Gets the user's current clue, has seen clue, hints_used, attempts"""
         user = self.find_user(username)
@@ -211,7 +218,7 @@ class Database:
         if user[3] == -1:
             # user is yet to start the quiz, ask him to say hello
             return (None,) * 4
-        elif user[3] == 50:
+        elif user[3] == 50 or user[3] == user[4] == self.total_clues:
             # user has finished the quiz,
             return (50,) + (None,) * 3
         self.cursor.execute(query, {"clueId": user[3]})
@@ -226,10 +233,8 @@ class Database:
 
     def update_current_clue(self, username, current_clue):
         """Updates the current clue and last hint used time of the user"""
-        self.cursor.execute("SELECT COUNT(*) FROM clues")
-        n = self.cursor.fetchone()
-        print("No of clues is :", n[0])
-        if current_clue > n[0]:
+        n = self.total_clues
+        if current_clue > n:
             # user has finished the quiz
             current_clue = 50  # setting clue to random no
 
@@ -263,6 +268,7 @@ class Database:
         and returns the clue as a string"""
         # find the user
         clue, first_time, _, _ = self.get_single_clue(username)
+        print("The clue is :", clue)
         if clue == None:
             return START_QUIZ_BEFORE_ASKING_FOR_CLUES_AND_HINTS_TOAST
         if clue == 50:
@@ -270,9 +276,8 @@ class Database:
         if first_time:
             print("first time viewing the clue")
             clue, _, _, _ = self.update_current_clue(username, clue[0] + 1)
-            return clue[3] + "||" + clue[1]
-            # if clue[0] == 1:
-            #     clue, _, _, _ = self.update_current_clue(username, clue[0])
+            if clue == 50:
+                return QUIZ_COMPLETED_TOAST
             return clue[3] + "||" + clue[1]
         else:
             print("viewing the clue again")
@@ -289,7 +294,7 @@ class Database:
             last_attempted_time,
             last_hint_used_time,
         ) = self.get_user_time_stamps(username)
-        if clue == None:
+        if clue[0] == None:
             return START_QUIZ_BEFORE_ASKING_FOR_CLUES_AND_HINTS_TOAST
         if clue == 50:
             return QUIZ_COMPLETED_TOAST
@@ -398,15 +403,3 @@ class Database:
                 + "||"
                 + "Wait for {} before answering the question".format(time_left)
             )
-
-    def update_user_current_clue(self, username, clue_no):
-        """updates the question number for the given username to the given number"""
-        print("Updating the user's current clue to", clue_no)
-        # checking if the user has completed the quiz,
-        # if yes, we set the clue to 0 in users table
-        self.cursor.execute("SELECT COUNT(*) FROM clues")
-        n = self.cursor.fetchone()
-        if clue_no > n[0]:
-            clue_no = 0
-        query = "UPDATE users SET clue = ? WHERE name =?"
-        self.cursor.execute(query, (clue_no, username))

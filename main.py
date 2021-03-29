@@ -22,7 +22,7 @@ HELP_TOAST = "`$hello`: _To get hello reply from bot_||\
     `$hint`: _To get a hint for your current clue_"
 
 HELLO_MESSAGE = (
-    "Hello there, welcome to treasure hunt, enter $clue to start your journey"
+    "Hello there, welcome to treasure hunt, enter `$clue` to start your journey"
 )
 
 
