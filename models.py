@@ -3,17 +3,19 @@ from datetime import datetime
 from sqlite3.dbapi2 import Error
 from utils import compare_time
 
-# TODO: ADD FEATURE TO SEND WAIT TIME BEFORE VIEWING A CLUE
-# TODO: ADD CORRECT ANS WRONG ANS TOAST
-
 # TODO: add logs for everything, to make life easier
 
 DB_NAME = "festemberHunt21.db"
 
-QUIZ_COMPLETED_TOAST = "You have already completed the hunt! Now go follow festember_inductions Instagram handle to learn more"
+QUIZ_COMPLETED_TOAST = """You have already completed the hunt
+    ||Thank you for helping us recover the stolen trophy.
+    ||Follow our inductions handle - @festember_inductions on Instagram!
+    ||https://instagram.com/festember_inductions 
+    ||To learn more about the fest, visit our Instagram page @festember.
+    ||https://instagram.com/festember"""
 
 START_QUIZ_BEFORE_ASKING_FOR_CLUES_AND_HINTS_TOAST = (
-    "Start Quiz with a $hello before asking for clue or hint! :)"
+    "Start Quiz with a `$hello` before asking for clue or hint! :)"
 )
 
 VIEW_CLUE_BEFORE_VIEWING_HINT_TOAST = "View the Clue before trying to view a hint!"
@@ -260,8 +262,10 @@ class Database:
         if clue == None:
             print(username, "has started the hunt")
             self.update_current_clue(username, 0)
-            return True
-        return False
+            return 0
+        if clue == 50:
+            return 2
+        return 1
 
     def get_clue(self, username):
         """get the clue for the current question from the database,
@@ -278,7 +282,7 @@ class Database:
             clue, _, _, _ = self.update_current_clue(username, clue[0] + 1)
             if clue == 50:
                 return QUIZ_COMPLETED_TOAST
-            return clue[3] + "||" + clue[1]
+            return "**Story : **||" + clue[3] + "||**Clue :  **||" + clue[1]
         else:
             print("viewing the clue again")
             return clue[1]
@@ -294,7 +298,7 @@ class Database:
             last_attempted_time,
             last_hint_used_time,
         ) = self.get_user_time_stamps(username)
-        if clue[0] == None:
+        if clue == None:
             return START_QUIZ_BEFORE_ASKING_FOR_CLUES_AND_HINTS_TOAST
         if clue == 50:
             return QUIZ_COMPLETED_TOAST
@@ -307,32 +311,12 @@ class Database:
         if hints_used >= len(hints):
             return VIEWED_ALL_THE_HINTS_TOAST
 
-        # if hints_used == 0:
-        #     # user wants to see the first hint
-        #     # if clue[0] == 1:
-        #     #     # user is currently in first clue so, compare with time_joined,
-        #     #     # .   to verify if he can view the clue
-        #     #     if compare_time(time_joined, HINT_AFTER_CLUE_COUNTDOWN):
-        #     #         self.update_hint_and_last_hint_used_time(username, 1)
-        #     #         return hints[0][3]
-        #     #     else:
-        #     #         return CANNOT_VIEW_HINT_JUST_YET_TOAST
-        #     # else:
-        #     # user is viewing >1 clue,
-        #     # . so compare with the last_hint_used_time
-        #     if compare_time(last_hint_used_time, HINT_AFTER_CLUE_COUNTDOWN):
-        #         self.update_hint_and_last_hint_used_time(username, hints_used + 1)
-        #         return hints[hints_used][3]
-        #     else:
-        #         return CANNOT_VIEW_HINT_JUST_YET_TOAST
-        # else:
-        # user has already viewed all a hint, so compare with last_hint_time
         can_view_hint, time_left = compare_time(
             last_hint_used_time, HINT_AFTER_CLUE_COUNTDOWN[hints_used]
         )
         if can_view_hint:
             self.update_hint_and_last_hint_used_time(username, hints_used + 1)
-            return hints[hints_used][3]
+            return "**Hint {} :**||".format(hints_used + 1) + hints[hints_used][3]
         else:
             return (
                 CANNOT_VIEW_HINT_JUST_YET_TOAST
@@ -366,7 +350,12 @@ class Database:
             # no checks,directly check the answer
             if answer == clue[2]:
                 self.answer_question(username, True, (clue[0],))
-                return CORRECT_ANS_TOAST + "||" + clue[4]
+                return (
+                    CORRECT_ANS_TOAST
+                    + "||**Story Continues :**||"
+                    + clue[4]
+                    + "||Enter `$clue` to view the next clue."
+                )
             else:
                 # inc attempt, set attempt_time
                 if (attempts + 1) >= ATTEMPTS_BEFORE_VIEW_HINTS_TOAST:
@@ -388,7 +377,12 @@ class Database:
         if can_view_clue1:
             if answer == clue[2]:
                 self.answer_question(username, True, (clue[0],))
-                return CORRECT_ANS_TOAST + "||" + clue[4]
+                return (
+                    CORRECT_ANS_TOAST
+                    + "||**Story Continues :**||"
+                    + clue[4]
+                    + "||Enter `$clue` to view the next clue."
+                )
             else:
                 # inc attempt, set attempt_time
                 if (attempts + 1) >= ATTEMPTS_BEFORE_VIEW_HINTS_TOAST:
@@ -403,3 +397,24 @@ class Database:
                 + "||"
                 + "Wait for {} before answering the question".format(time_left)
             )
+
+    def get_leaderboard(self):
+        self.cursor.execute(
+            "SELECT name, last_solved FROM users ORDER BY last_solved desc, last_solved_time asc LIMIT 20"
+        )
+        res = self.cursor.fetchall()
+        print("res", res)
+        string = ""
+        string += "```\n"
+        string += "{:<10}  {:<20} {:<8}\n".format("Position", "Username", "Q. Solved")
+        string += "__________________________________________\n"
+        for pos, value in enumerate(res):
+            if len(value[0]) <= 20:
+                string += "{:<10} {:<20}  {:<8}\n".format(pos + 1, value[0], value[1])
+            else:
+                string += "{:<10} {:<20}  {:<8}\n".format(
+                    pos + 1, value[0][:16] + "...", value[1]
+                )
+        string += "```"
+        print(string)
+        return string

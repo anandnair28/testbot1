@@ -5,7 +5,7 @@
         "story_start": "A mysterious drive seems to offer a clue to the lost trophy. With no options remaining, Noah decides to try and solve the path offered by the drive. A video seems to hold the answer to the location. What has Toy Story got to do with the trophy?",
         "story_continue": "The screen goes blank once Noah enters the answer. Noah starts to panic, wondering if his search has come to an end. Suddenly, an input field appears on screen. The clue awaits.",
         "hints": [
-            "A million ways to die in the ____",
+            "A million ways to die in the ________",
             "American Frontier (Answer length: 8 characters)"
         ]
     },
@@ -13,7 +13,7 @@
         "clue": "files/clue2.wav",
         "answer": "charliechaplin",
         "story_start": "An audio clip starts playing, a periodic cycle of beeps. After recollecting himself, Noah tries to ascertain a possible pattern from the arbitrary beeps. A bulb lights up in his head and Noah rushes to unravel the cipher.",
-        "story_continue": "An ode to Chaplin and a trip to the Wild West. The clues don't seem to have a discernible pattern or an end in sight. Noah struggles to keep himself awake, fighting drowsiness so that he can figure out the location of the trophy. How does Charlie Chaplin connect with Festember? Drama, monologue, stand-up? Mime! The obvious choice. According to the schedule, the mime event should be happening the next day at 9 AM. Since the clues seem to relate to Festember events, Noah decides to check out the F’19 aftermovie to gain a quick insight into the fest. With his reserve energy completely out, Noah finally succumbs to his comfortable bed and awaits the mystery of the next day.||Do watch the Festember '19 Aftermovie||https://www.youtube.com/watch?v=NlOfAO2kYFQ&ab_channel=FestemberNITTrichy",
+        "story_continue": "An ode to Chaplin and a trip to the Wild West. The clues don't seem to have a discernible pattern or an end in sight. Noah struggles to keep himself awake, fighting drowsiness so that he can figure out the location of the trophy. How does Charlie Chaplin connect with Festember? Drama, monologue, stand-up? Mime! The obvious choice. According to the schedule, the mime event should be happening the next day at 9 AM. Since the clues seem to relate to Festember events, Noah decides to check out the F’19 aftermovie to gain a quick insight into the fest. With his reserve energy completely out, Noah finally succumbs to his comfortable bed and awaits the mystery of the next day.",
         "hints": [
             "Dots and Dashes! What hath God wrought?",
             "-.-. .... .- .-. .-.. .. . -.-. .... .- .--. .-.. .. -.\n(Answer length: 14 characters)"
@@ -22,8 +22,8 @@
     {
         "clue": "He finds the application and a text saying “Escape the room”. He also finds an input box for the answer.||files/clue3.png",
         "answer": "jamesbond",
-        "story_start": "The five consecutive alarms fail to awake Noah, but a swift kick from his roommate does the trick. With a quick 10-minutes-before-class-starts-morning-routine, Noah readies himself for a day of wonder. The missing trophy finally registers in his head, and a quick sweep through the team Whatsapp groups reveals that the trophy remains at large. Remembering the previous clue he received, Noah heads onto the Mime event, hoping the end of this peculiar hunt arrives soon. At the EEE Audi, he takes up a seat at the backend of the hall and finds an abandoned laptop that was ON. An application was running, some sort of game. Curiosity getting the better of him, he checks it out.",
-        "story_continue": "The application changes the screen and displays a prompt.\n\"Congratulations! Your escape shall lead you to the missing trophy. Good progress has been made, but time continues to tick away. Your next destination awaits. And to make things more interesting, let’s add a time limit of half an hour for you to pinpoint the next clue. Tick Tock; the trophy strays further away\"\nOf course, there would be a time limit. It didn’t seem like the rogue plans to make things easy. But there was another puzzling aspect; James Bond wasn’t related to anything in the fest. Or wait, could it be? He remembers that there was an informal event - an escape room was occurring near CCD. He grabs his cycle and rushes to the late-night hangout spot.",
+        "story_start": "The five consecutive alarms fail to awake Noah, but a swift kick from his roommate does the trick. With a quick 10-minutes-before-class-starts-morning-routine, Noah readies himself for a day of wonder. The missing trophy finally registers in his head, and a quick sweep through the team Whatsapp groups reveals that the trophy remains at large. Remembering the previous clue he received, Noah heads onto the Mime event, hoping the end of this peculiar hunt arrives soon. At the EEE Audi, he takes up a seat at the back end of the hall and finds an abandoned laptop that was ON. An application was running, some sort of game. Curiosity getting the better of him, he checks it out.",
+        "story_continue": "The application changes the screen and displays a prompt. ||\"Congratulations! Your escape shall lead you to the missing trophy. Good progress has been made, but time continues to tick away. Your next destination awaits. And to make things more interesting, let’s add a time limit of half an hour for you to pinpoint the next clue. Tick Tock; the trophy strays further away\"||Of course, there would be a time limit. It didn’t seem like the rogue plans to make things easy. But there was another puzzling aspect; James Bond wasn’t related to anything in the fest. Or wait, could it be? He remembers that there was an informal event - an escape room was occurring near CCD. He grabs his cycle and rushes to the late-night hangout spot.",
         "hints": [
             "files/clue3_hint1.png",
             "Answer Length: 9 characters"
@@ -35,78 +35,78 @@
         "story_start": "The aroma of coffee reminds Noah that hunger had been gnawing at him since morning. The clues had not let him take a breather and the added time frame only made matters worse. He rushes upstairs to inquire at the Escape Room registration desk for any possible clues. To his surprise, the pair manning the desk had an envelope for a Festember team member. Noah collects the envelope and heads to the food stalls, hunger getting the better of him. As he munches down a waffle, he opens the envelope to reveal his next clue.",
         "story_continue": "Breathe, breathe in the air. Maybe a break isn’t a bad idea. But with only three nights remaining, time is of the essence. Pink Floyd?  What’s the thread connecting the dots? Rock Night! A massive hall filled with thousands of enchanted people, while bands etched their music on everyone’s soul. Noah remains dazed at the sheer size of the task ahead of him. How was he supposed to find the next clue among all the people at GJCH?",
         "hints": [
-            "Wish You Were Here",
-            "Answer Length: 9 characters"
+            "files/clue4_hint1.png",
+            "Wish You Were Here (Answer length: 9 characters)"
         ]
     },
     {
         "clue": "files/clue5.png",
-        "answer": "ragas",
-        "story_start": "The previous night was just a prequel. Before him, Rock Night was in full swing with the walls of GJCH trying to grapple with the expanse of excitement. With the music blaring and the crowd cheering, any attempts to communicate with his team members were drowned out. Finding no luck in the various bays, Noah heads backstage, hoping for some insight. While trying to spot anything out of the ordinary, his eyes single out a gift-wrapped tapestry. Considering the possibility that the tapestry might be a part of a band’s gig, Noah carefully unfurls the wrapping, hoping to be proven wrong. A map reveals itself, a surprising sign of relief overtaking him. The chase continues.",
-        "story_continue": "The night is still young. Noah decides to join his team and enjoy himself after achieving his small victory. Taringini, the Eastern band competition, seems to be the most probable location for the next clue. As the lead singer hypes the crowd for the next song, Noah finally lets himself embrace the moment. The next day can hold its surprises for a while.",
+        "answer": "orchestra",
+        "story_start": "The previous night was just a prequel. Before him, Rock Night was in full swing with the walls of GJCH trying to grapple with the expanse of excitement. With the music blaring and the crowd cheering, any attempts to communicate with his team members were drowned out. Finding no luck in the various bays, Noah heads backstage, hoping for some insight. While trying to spot anything out of the ordinary, his eyes single out a gift-wrapped canvas. Considering the possibility that the canvas might be a part of a band’s gig, Noah carefully unfurls the wrapping, hoping to be proven wrong. A collage reveals itself, a surprising sign of relief overtaking him. The chase continues.",
+        "story_continue": "The night is still young. Noah decides to join his team and enjoy himself after achieving his small victory. Acoustics, the western band competition, seems to be the most probable location for the next clue. As the lead singer hypes the crowd for the next song, Noah finally lets himself seize the moment. The next day can hold its surprises for a while.",
         "hints": [
-            "Life has no reverse button but this clue does",
-            "Answer Length: 5 characters"
+            "files/clue5_hint1.png",
+            "Answer Length: 9 characters"
         ]
     },
     {
-        "clue": "files/clue6.png",
+        "clue": "files/clue6_1.png||files/clue6_2.png",
         "answer": "dominos",
-        "story_start": "An up-and-coming band plays its songs as Noah finally wakes up for the morning. The Indie stage seems to be in full throttle, with beautiful songs soothing the groggy night owls. Noah heads towards the EEE auditorium, to figure out the next clue at the Tarinigini event. When he arrives, a few team members request help to set up the audio system, owing to which, Noah finds himself checking mics while simultaneously scanning the room for possible clues. His eyes land on a poster on one of the seats in the far left. On enquiring with the others to no avail, Noah becomes certain that this was the next clue. He rushes out to a quiet corridor and starts figuring out the next location.",
-        "story_continue": "The domino effect. Cause and effect? The rogue likes to choose topics from a wide spectrum. Each clue becomes more difficult to relate with Festember. Perplexed by the clue, Noah heads towards the food stalls to catch a quick bite to eat before setting off again. Shawarma, ice cream, pizza, or dosa? The Festember gift card lies in wait as Noah tries to decide what he wants to eat. Suddenly his mind picks up on something-Dominos, the pizza stall. The name seems to mock his muddled head. Noah approaches the stall and orders a pizza to satisfy his hunger as well as enquire about the clue. The owner hands him another poster, similar to the previous clue. Creeping with excitement, Noah dives into his delicious food and starts figuring out the clue.",
+        "story_start": "An up-and-coming band plays its songs as Noah finally wakes up for the morning. The Indie stage seems to be in full throttle, with beautiful songs soothing the groggy night owls. Noah heads towards the EEE auditorium, to figure out the next clue at the Acoustics event. When he arrives, a few team members request help to set up the audio system, owing to which, Noah finds himself checking mics while simultaneously scanning the room for possible clues. His eyes land on a poster on one of the seats in the far left. A golden ticket and a note seems to be attached to the back of the poster. On enquiring with the others to no avail, Noah becomes certain that this was the next clue. He rushes out to a quiet corridor and starts figuring out the next location.",
+        "story_continue": "The domino effect. Cause and effect? The rogue likes to choose topics from a wide spectrum. Each clue becomes more difficult to relate with Festember. Perplexed by the clue, Noah heads towards the food stalls to catch a quick bite to eat before setting off again. Shawarma, ice cream, pizza, or dosa? The Festember food card lies in wait as Noah tries to decide what he wants to eat. Suddenly his mind picks up on something-Dominos, the pizza stall. The name seems to mock his muddled head. Noah approaches the stall and orders a pizza to satisfy his hunger as well as enquire about the clue. The owner hands him another poster in exchange for the golden ticket, similar to the previous clue. Creeping with excitement, Noah dives into his delicious food and starts figuring out the clue.",
         "hints": [
-            "Tuesday night means Joey’s special",
-            "30 minutes, nahi toh free! (Answer length: 7 characters)"
+            "Tuesday night means Joey’s special! Don’t waste the golden ticket!",
+            "30 minutes, nahi toh free! (answer length: 7 characters)"
         ]
     },
     {
         "clue": "files/clue7.png",
         "answer": "thebeatles",
-        "story_start": "The poster contains so special information. A simple picture stares back at a confused Noah. Why was a zebra crossing so important?",
-        "story_continue": "First, Pink Floyd and now The Beatles. The mastermind certainly has impeccable taste in music. Yesterday all my troubles seemed so far away. The day goes on and no sign of the trophy yet. With Rock Night and Gigahertz out of the way, the Indie Stage looks like the next location for the hunt.",
+        "story_start": "The poster contains so special information except for a few words at the bottom. A simple picture stares back at a confused Noah. Why was a zebra crossing so important?",
+        "story_continue": "First, Pink Floyd and now The Beatles. The mastermind certainly has impeccable taste in music. Yesterday all my troubles seemed so far away. The day goes on and no sign of the trophy yet. I am Independent. What could that refer to?  With Rock Night and Gigahertz out of the way, Festember’s iconic Indie Stage looks like the next location for the hunt.",
         "hints": [
             "files/clue7_hint1.png",
             "John Lennon, Paul McCartney, Ringo Starr, George Harrison (Answer Length: 10 characters)"
         ]
     },
     {
-        "clue": "Breakups are always hard, an end to the times you spent together. All the memories and moments hold you back, but life is about moving on. To choose to leave your comfort, love, and hope, and to set foot into the unknown. But once you take the first step forward, dreams become closer to reality, and life finds a way to flourish and build anew. Maybe love need not be the answer to all; dreams are nothing short of perfection. Maybe it’s time to realize your dream of becoming an actress or an owner of a jazz club. Time is relative; a reminder during the dark times, a ticking clock during the good ones. Keep your chin up, and allow yourselves to waltz through life’s tunes.",
+        "clue": "Breakups are tough. But sometimes it's for the better when both achieve their dreams; for one person it means owning a jazz club; while for another it means becoming an actor. No point pondering over what could've been. The only thing that matters is the smile at the end.||**Guess the movie?**",
         "answer": "lalaland",
-        "story_start": "He heads over to the indie stage again. Now Gigahertz, the battle of the bands just got over. [RELATE TO FINDING CLUE?]",
+        "story_start": "He heads over to the Indie stage at CEESAT ground, just in time to witness the final performance of Gigahertz. As the band wraps up, Noah springs into action and searches for the clue. He notices an envelope on top of a speaker and quickly opens it up.",
         "story_continue": "The famous Oscar fiasco, a crushing scene in the minds of most movie enthusiasts. La La Land; a beautiful musical piece. The next location has to be Choreonite. Since he had some time to spare, Noah heads back to the food stalls. The afternoon sun seems to show no mercy, rain looking like a divine blessing. Or not. Noah remembers how big a disaster the rain turned out to be in Festember ‘18. Good times, nevertheless. Festember never ceases to amaze.",
         "hints": [
-            "OMG, the Oscar goes to ___! Umm, sorry it was a mistake.",
+            "OMG, the Oscar goes to _____! Umm, sorry it was a mistake.",
             "a euphoric, dreamlike mental state detached from the harsher realities of life When you spend time around [him] you are struck by someone who isn't living in _____________ and isn't a pushover. (Answer Length: 8 characters)"
         ]
     },
     {
         "clue": "files/clue9.png",
         "answer": "cocochanel",
-        "story_start": "Noah arrives at Choreonite, during the middle of the NIT Trichy’s dance troupe performance. Stunned by the graceful performance, Noah finds himself rooted at his spot until the performance ended.",
-        "story_continue": "Realisation sets in that this is the next clue to the Trophy. He’s never gonna get a break. The clue Coco Chanel leads to the event Fashionitas. He wonders what he’s gonna find over there. He goes back to his friends. Tries to enjoy the night. He skips the proshow and heads over to admin hall. The usual empty halls are now jampacked with team members. He goes to A13 hall to find everyone was chilling. He sits down in a chair, starts a movie in his PC, and dozes off.",
+        "story_start": "Noah arrives at Choreonite, during the middle of NIT Trichy’s dance troupe performance. Stunned by the graceful performance, Noah finds himself rooted at his spot until the performance ended. Once the team heads backstage, Noah catches up with a few of his friends in the audience. The trophy is still missing, but that’s yet to dampen the fest mood. Hearing a commotion backstage, Noah heads over to check out the issue. A dance team from Bangalore apparently lost a costume and now the missing dress had just suddenly reappeared. Team members were confused over what really happened, and one of the troupe members displayed a picture that was attached to the ‘stolen’ costume. Noah rushes over to intercept the picture and quickly exits the venue, hoping that his behavior can be explained with the restoration of the trophy.",
+        "story_continue": "Coco Chanel, a fashion icon. The clue must lead to the Fashionistas event. Luckily the event is being held tomorrow. Finally, Noah can take a breather after a long day. He grabs a bite to eat and joins his friends. With no energy left to experience EDM Night, Noah heads over to the A13 hall to meet up with his teammates. Even with the missing trophy looming over everyone’s heads, the cheer and jolly never cease. As the night draws on, Noah dozes off; Festember is yet to divulge all its surprises.",
         "hints": [
             "files/clue9_hint1.png",
-            "Founder of the Brand (Answer Length: 10 characters)"
+            "Founder of the Brand (10 characters)"
         ]
     },
     {
-        "clue": "files/ASoundOfThunder.pdf||files/clue10.png",
+        "clue": "files/clue10.png||ASoundOfThunder.pdf",
         "answer": "eglab",
-        "story_start": "Noah wakes up in the morning feeling tired. He was in the corridor outside A13 hall sleeping wrapped up in a chair. The door leading to Barn Hall was open in front of him. He tries to figure out what he’s doing here and realises he dozed off somehow. Damn, this is so embarrassing. How did he end up outside? Ughh, that’s another mystery to solve. He goes inside A13 hall and finds his laptop. He found some people arguing in front of the PR Desk. He looks at the time and realises the Fashion event is about to start. He goes over and finds the Fashion event coordinators discussing about something. He realises someone dropped off a book with a note in it. He checks it out",
-        "story_continue": "Noah wonders what the hell is “eglab”. He suddenly realises it’s EG Lab. Finally he gets a clue that makes sense. Wait? Is it the location of the trophy. He goes to Civil Department EG lab. There standing in a desk in the center, is the Festember Trophy. Also, he sees someone that surprises him.",
+        "story_start": "Noah wakes up in the morning feeling weary. He was in the corridor outside A13 hall wrapped up in a chair. He tries to figure out what he’s doing here and realizes that he had dozed off. How did he end up outside? A case for another day. After acquiring his laptop from A13, he heads over to the Fashionitas event at Barn Hall. On arrival, he meets up with a few team members to enquire about any clues. They hand him a book which had been found near the stage earlier this morning. Noah opened the book only to be met by a baffling code. Now, how was he supposed to solve this one?",
+        "story_continue": "Eglab?  Either the rogue had a stroke or Noah has finally hit a roadblock in his quest. What was eglab supposed to mean? Eglab….eglab……. EG Lab. Of course. The EG Lab is located in the Civil Engineering department. Noah rushes towards the department on his cycle, swerving any obstacles on the streets. As he rushes up the steps off the department, a sense of closure overtakes him. Could this be the final location? Charging into the lab, Noah finds the prestigious trophy sitting on top of one of the drawing tables. At long last, he had found the trophy after chasing clues all over campus. In his rush of relief, Noah had failed to realize he was not alone in the lab.",
         "hints": [
-            "Ottendorf/Book Cipher [Page-Line-Word]",
-            "When in doubt, always use the first letter :)"
+            "Ottendorf :) [Page-Line-Word]",
+            "When in doubt, always use the first letter (Answer Length: 5 characters)"
         ]
     },
     {
-        "clue": "Solve The Crossword||files/crossword.png",
+        "clue": "files/crossword.png||**Find your way to the end of the rainbow**",
         "answer": "charity",
-        "story_start": "He finds out who it is. The pro show artist <RANDOM NAME> for popular night was waiting for him. He updates Noah. He was bored for 4 days, decided to do something rogue and steals the trophy leaving clues. He asks if Noah can solve one final riddle. Excited, Noah says yes.",
-        "story_continue": "He solves the crossword and riddle and gets the trophy back in time for the inauguration.||Damn! It has been a hectic three days. He needs some rest. He sees everyone is excited for Popular Night. Let’s see how it goes.||End of Day 3 - Leads to @festember_inductions, Festember website, Festember Instagram handle.",
+        "story_start": "As Noah prances around the trophy, the man observes him from afar. After the serotonin finally wears off, Noah notices the mysterious figure in the room. As light falls on the figure, the rogue is finally revealed. It was the artist who was supposed to play for Popular Night. Noah gapes in astonishment, wondering why a celebrity like him would want to steal the trophy. The artist watches Noah with amusement, and then goes on to reveal his motive. The artist had been restless for the past few days and decided to make up a fun game to pass his time. Noah scoffed upon hearing the word ‘fun’- running around campus wasn’t exactly what he defined as enjoyment. But looking back, solving the clues had given him a different kind of thrill as well as the opportunity to explore Festember in a unique fashion. The artist stood nearby holding out a sheet of paper, “ready for your final clue?”. Noah stood bewildered; neither he nor the artist could refuse a good riddle.",
+        "story_continue": "Having solved the final clue, Noah bids adieu to the artist and heads towards GJCH with the trophy in hand. The chase has finally come to an end.||The trophy has been restored. Noah’s tireless efforts have paid off and at long last, it’s time to let loose. He joins his team at bay zero and waits for Popular Night to begin. The countdown begins and the proshow artist arrives on stage. His puzzles were an absolute pain, but now is not the time to fret. As the beat builds up, Noah recounts his path over the past few days. The fest truly amazed him every step of the way. Now, it was time to embrace the magic of Festember.||\n\nCongratulations on completing the Festember Treasure Hunt! Your chance to be a part of this spectacle is near. **See you at the inductions!**||Follow our inductions handle - @festember_inductions on Instagram!||https://instagram.com/festember_inductions ||To learn more about the fest, visit our Instagram page @festember.||https://instagram.com/festember ||Festember ‘19 Website||https://festember.com/19/home/ ||Festember ‘20 Website||https://festember.com/20/home/ ",
         "hints": [
-            "The previous answers are your answers now",
-            "Don’t forget VIBGYOR order"
+            "The previous answers are your answer now!",
+            "Don’t forget VIBGYOR order. Indigo is **darker** than Violet ;)"
         ]
     }
 ]

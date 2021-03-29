@@ -2,7 +2,7 @@ import discord
 import os
 import json
 from dotenv import load_dotenv
-from models import Database
+from models import Database, QUIZ_COMPLETED_TOAST
 
 load_dotenv(verbose=True)
 
@@ -21,12 +21,12 @@ HELP_TOAST = "`$hello`: _To get hello reply from bot_||\
     `$ans<SPACE>your_answer_here`: _To enter answer after viewing clue_||\
     `$hint`: _To get a hint for your current clue_"
 
-HELLO_MESSAGE = (
-    "Hello there, welcome to treasure hunt, enter `$clue` to start your journey"
-)
+HELLO_MESSAGE = "Hello there, welcome to treasure hunt, enter `$clue` to start your journey||\
+    Use `$help` to know the bot commands."
 
 
-HELLO_AGAIN_MESSAGE = "Hello again, why are you wasting your time ?"
+HELLO_AGAIN_MESSAGE = "Hello again, why are you wasting your time ?||\
+    If you are confused use `$help`."
 
 
 @client.event
@@ -63,13 +63,19 @@ async def on_message(message):
         await send_message(hint, message)
 
     elif message.content == "$hello":
-        if db.start_hunt(str(message.author)):
+        res = db.start_hunt(str(message.author))
+        if res == 0:
             await send_message(HELLO_MESSAGE, message)
-        else:
+        elif res == 1:
             await send_message(HELLO_AGAIN_MESSAGE, message)
+        else:
+            await send_message(QUIZ_COMPLETED_TOAST, message)
 
     elif message.content == "$help":
         await send_message(HELP_TOAST, message)
+
+    elif message.content == "$leaderboard":
+        await message.channel.send(db.get_leaderboard())
 
     else:
         await send_message(WRONG_FORMAT_TOAST, message)
