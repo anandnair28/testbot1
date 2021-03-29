@@ -22,19 +22,21 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-    if message.content.startswith("$sup"):
-        print(message.author)
-        print(str(message.author))
-        res = db.find_user(str(message.author))
-        print(res)
-        await message.channel.send(res)
+    # if message.content.startswith("$sup"):
+    #     print(message.author)
+    #     print(str(message.author))
+    #     res = db.find_user(str(message.author))
+    #     print(res)
+    #     await message.channel.send(res)
     # if message.content.startswith('$leaderboard'):
     if message.content.startswith("$clue"):
         clue = db.get_clue(str(message.author))
-        await message.channel.send(clue)
+        await send_message(clue, message)
+        # await message.channel.send(clue)
     if message.content.startswith("$hint"):
         hint = db.get_hint(str(message.author))
-        await message.channel.send(hint)
+        await send_message(hint, message)
+        # await message.channel.send(hint)
 
     if message.content.startswith("$hello"):
         # intro_text = data["intro"].format(str(message.author))
@@ -64,7 +66,8 @@ async def on_message(message):
         if len(ans) == 2 and ans[0] == "$ans":
             # ans is of the correct format
             res = db.check_ans(str(message.author), ans[1])
-            await message.channel.send(res)
+            await send_message(res, message)
+            # await message.channel.send(res)
 
     # if message.content.startswith("$ans"):
 
@@ -92,6 +95,15 @@ async def on_message(message):
 
     #         else:
     #             await message.channel.send(data["wrong_answer_toast"])
+
+
+async def send_message(message_string, message):
+    for element in message_string.split("||"):
+        if element.startswith("files/"):
+            await message.channel.send(file=discord.File(element))
+        else:
+            await message.channel.send(element)
+    # return
 
 
 client.run(os.getenv("TOKEN"))

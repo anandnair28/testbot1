@@ -5,6 +5,7 @@ from utils import compare_time
 
 # TODO: BUG CHECK IF USER VIEWED CLUE FOR 1ST QUESTION
 # TODO: ADD FEATURE TO SEND WAIT TIME BEFORE VIEWING A CLUE
+# TODO: ADD CORRECT ANS WRONG ANS TOAST
 
 # TODO: add logs for everything, to make life easier
 
@@ -21,8 +22,18 @@ VIEW_CLUE_BEFORE_VIEWING_HINT_TOAST = "view clue before viewing hint"
 VIEWED_ALL_THE_HINTS_TOAST = "you have viewed all the hints"
 
 HINT_AFTER_CLUE_COUNTDOWN = 30
+ATTEMPT_INTERVAL = 1
 
 CANNOT_VIEW_HINT_JUST_YET_TOAST = "wait for sometime before viewing the clue"
+ATTEMPT_COOLDOWN_TOAST = "wait for sometime"
+
+START_QUIZ_BEFORE_ANSWERING_TOAST = "Start the quiz before answering"
+VIEW_CLUE_BEFORE_ANSWERING_TOAST = "View clue before answering"
+CORRECT_ANS_TOAST = "Correct ans"
+WRONG_ANS_TOAST = "Wrong ans"
+
+REMIND_PLAYER_TO_VIEW_HINTS_TOAST = "Don't forget to view hints"
+ATTEMPTS_BEFORE_VIEW_HINTS_TOAST = 5
 
 
 class Database:
@@ -123,6 +134,43 @@ class Database:
         (time_joined, last_solved_time, last_attempted_time, last_hint_used_time)"""
         user = self.find_user(username)
         return user[2], user[5], user[6], user[9]
+
+    def answer_question(self, username, ans_is_correct, data):
+        """sets the user's date, when a hunt is attempted"""
+        if ans_is_correct:
+            # de-structure
+            (last_solved,) = data
+            query = "UPDATE users SET \
+                last_solved=:last_solved,\
+                last_solved_time=:last_solved_time\
+                last_attempted_time=None,\
+                attempts=0,\
+                hints_used=0,\
+                last_hint_used_time=None WHERE name=:username"
+            self.cursor.execute(
+                query,
+                {
+                    "last_solved": last_solved,
+                    "last_solved_time": datetime.now().timestamp(),
+                    "username": username,
+                },
+            )
+            return self.conn.commit()
+        else:
+            (attempts,) = data
+            query = "UPDATE users SET \
+                last_attempted_time=:last_attempted_time,\
+                attempts=:attempts\
+                WHERE name=:username"
+            self.cursor.execute(
+                query,
+                {
+                    "attempts": attempts,
+                    "last_attempted_time": datetime.now().timestamp(),
+                    "username": username,
+                },
+            )
+            return self.conn.commit()
 
     def add_clues(self, clue):
         """add clues to the db,clue object must be of the type
@@ -270,22 +318,54 @@ class Database:
     def check_ans(self, username, answer):
         """checks if the ans given by the user is correct,
         will return correct_toast/ wrong_toast appropriately"""
+        clue, first_time, hints_used, attempts = self.get_single_clue(username)
+        (
+            _,
+            last_solved_time,
+            last_attempted_time,
+            last_hint_used_time,
+        ) = self.get_user_time_stamps(username)
         # find the user
-        clue = self.get_single_clue(username)
         if clue == None:
+            return START_QUIZ_BEFORE_ANSWERING_TOAST
+        if clue == -1:
             return QUIZ_COMPLETED_TOAST
-        clue_time = datetime.fromtimestamp(clue[2])
-        current_time = datetime.now()
-        if current_time > clue_time:
-            # user is answering question after the question is out
-            if answer == clue[7]:
-                self.update_user_current_clue(username, clue[0] + 1)
-                return clue[5]
+        if first_time:
+            return VIEW_CLUE_BEFORE_ANSWERING_TOAST
+        # the user has started the quiz, viewed the clue
+        # now check if the user can attempt to ans
+
+        # correct ans => reset attempts, last_attempt_time, hint_used
+        if last_attempted_time == None:
+            # first time attempting this clue
+            # no checks,directly check the answer
+            if answer == clue[2]:
+                self.answer_question(username, True, (clue[0],))
+                return CORRECT_ANS_TOAST + "||" + clue[4]
             else:
-                return clue[6]
+                # inc attempt, set attempt_time
+                if (attempts + 1) >= ATTEMPTS_BEFORE_VIEW_HINTS_TOAST:
+                    self.answer_question(username, False, (0,))
+                    return WRONG_ANS_TOAST + "||" + REMIND_PLAYER_TO_VIEW_HINTS_TOAST
+                else:
+                    self.answer_question(username, False, (attempts + 1,))
+                    return WRONG_ANS_TOAST
+        if compare_time(last_attempted_time, ATTEMPT_INTERVAL) and compare_time(
+            last_hint_used_time, ATTEMPT_INTERVAL
+        ):
+            if answer == clue[2]:
+                self.answer_question(username, True, (clue[0],))
+                return CORRECT_ANS_TOAST + "||" + clue[4]
+            else:
+                # inc attempt, set attempt_time
+                if (attempts + 1) >= ATTEMPTS_BEFORE_VIEW_HINTS_TOAST:
+                    self.answer_question(username, False, (0,))
+                    return WRONG_ANS_TOAST + "||" + REMIND_PLAYER_TO_VIEW_HINTS_TOAST
+                else:
+                    self.answer_question(username, False, (attempts + 1,))
+                    return WRONG_ANS_TOAST
         else:
-            # user answering question before the question is out
-            return "too fast, wait for sometime"
+            return ATTEMPT_COOLDOWN_TOAST
 
     def update_user_current_clue(self, username, clue_no):
         """updates the question number for the given username to the given number"""
