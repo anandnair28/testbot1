@@ -3,7 +3,7 @@ from models import Database
 
 
 def seed():
-    data_file = open("data.json")
+    data_file = open("testdata.json")
     data = json.load(data_file)
     print(len(data))
     db = Database()

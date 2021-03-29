@@ -1,0 +1,65 @@
+[
+    {
+        "clue": "Clue A",
+        "answer": "alpha",
+        "story_start": "Story Starts",
+        "story_continue": "Story Continues",
+        "hints": [
+            "Hint 1", "Hint 2"
+        ]
+    },
+    {
+        "clue": "Clue B",
+        "answer": "bravo",
+        "story_start": "Story Starts",
+        "story_continue": "Story Continues",
+        "hints": [
+            "Hint 1", "Hint 2"
+        ]
+    },
+    {
+        "clue": "Clue C",
+        "answer": "charlie",
+        "story_start": "Story Starts",
+        "story_continue": "Story Continues",
+        "hints": [
+            "Hint 1", "Hint 2"
+        ]
+    },
+    {
+        "clue": "Clue D",
+        "answer": "delta",
+        "story_start": "Story Starts",
+        "story_continue": "Story Continues",
+        "hints": [
+            "Hint 1", "Hint 2"
+        ]
+    },
+    {
+        "clue": "Clue E",
+        "answer": "echo",
+        "story_start": "Story Starts",
+        "story_continue": "Story Continues",
+        "hints": [
+            "Hint 1", "Hint 2"
+        ]
+    },
+    {
+        "clue": "Clue F",
+        "answer": "foxtrot",
+        "story_start": "Story Starts",
+        "story_continue": "Story Continues",
+        "hints": [
+            "Hint 1", "Hint 2"
+        ]
+    },
+    {
+        "clue": "Clue G",
+        "answer": "golf",
+        "story_start": "Story Starts",
+        "story_continue": "Story Continues",
+        "hints": [
+            "Hint 1", "Hint 2"
+        ]
+    }
+]
