@@ -13,8 +13,8 @@ def compare_time(time_stamp, dur):
     time_difference1 = curr_time - time
     time_difference2 = int((dur * 60) - time_difference1.seconds)
 
-    mins_left = int(time_difference2 // (dur * 60))
-    sec_left = int(time_difference2 % (dur * 60))
+    mins_left = int(time_difference2 // 60)
+    sec_left = int(time_difference2 % 60)
 
     wait_string = "`{}min(s) {}sec`".format(mins_left, sec_left)
 
