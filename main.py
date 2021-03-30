@@ -20,7 +20,8 @@ HELP_TOAST = "`$hello`: _To get hello reply from bot_||\
     `$clue`: _To get your next clue_||\
     `$ans<SPACE>your_answer_here`: _To enter answer after viewing clue_||\
     `$hint`: _To get a hint for your current clue_||\
-    `$leaderboard`: _To view the top 20 performers_"
+    `$leaderboard`: _To view the top 20 performers_||\
+    **If you have any queries you can always dm the moderators**"
 
 HELLO_MESSAGE = "Hello there, welcome to treasure hunt, enter `$clue` to start your journey||\
     Use `$help` to know the bot commands."
