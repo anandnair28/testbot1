@@ -400,7 +400,7 @@ class Database:
 
     def get_leaderboard(self):
         self.cursor.execute(
-            "SELECT name, last_solved FROM users ORDER BY last_solved desc, last_solved_time asc LIMIT 50"
+            "SELECT name, last_solved FROM users ORDER BY last_solved desc, last_solved_time asc LIMIT 20"
         )
         res = self.cursor.fetchall()
         # print("res", res)
@@ -408,27 +408,13 @@ class Database:
         string += "```\n"
         string += "{:<10}  {:<20} {:<8}\n".format("Position", "Username", "Q. Solved")
         string += "__________________________________________\n"
-        for pos, value in enumerate(res[:10]):
+        for pos, value in enumerate(res):
             if len(value[0]) <= 20:
                 string += "{:<10} {:<20}  {:<8}\n".format(pos + 1, value[0], value[1])
             else:
                 string += "{:<10} {:<20}  {:<8}\n".format(
                     pos + 1, value[0][:16] + "...", value[1]
                 )
-        for i in range(1, 5):
-            string += "```||"
-            string += "```\n"
-            start = i * 10
-            end = (i + 1) * 10
-            for pos, value in enumerate(res[start:end]):
-                if len(value[0]) <= 20:
-                    string += "{:<10} {:<20}  {:<8}\n".format(
-                        pos + start + 1, value[0], value[1]
-                    )
-                else:
-                    string += "{:<10} {:<20}  {:<8}\n".format(
-                        pos + start + 1, value[0][:16] + "...", value[1]
-                    )
         string += "```"
         # print(string)
         return string
