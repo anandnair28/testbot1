@@ -408,22 +408,27 @@ class Database:
         string += "```\n"
         string += "{:<10}  {:<20} {:<8}\n".format("Position", "Username", "Q. Solved")
         string += "__________________________________________\n"
-        for pos, value in enumerate(res[:25]):
+        for pos, value in enumerate(res[:10]):
             if len(value[0]) <= 20:
                 string += "{:<10} {:<20}  {:<8}\n".format(pos + 1, value[0], value[1])
             else:
                 string += "{:<10} {:<20}  {:<8}\n".format(
                     pos + 1, value[0][:16] + "...", value[1]
                 )
-        string += "```||"
-        string += "```\n"
-        for pos, value in enumerate(res[25:]):
-            if len(value[0]) <= 20:
-                string += "{:<10} {:<20}  {:<8}\n".format(pos + 1, value[0], value[1])
-            else:
-                string += "{:<10} {:<20}  {:<8}\n".format(
-                    pos + 1, value[0][:16] + "...", value[1]
-                )
+        for i in range(1, 5):
+            string += "```||"
+            string += "```\n"
+            start = i * 10
+            end = (i + 1) * 10
+            for pos, value in enumerate(res[start:end]):
+                if len(value[0]) <= 20:
+                    string += "{:<10} {:<20}  {:<8}\n".format(
+                        pos + start + 1, value[0], value[1]
+                    )
+                else:
+                    string += "{:<10} {:<20}  {:<8}\n".format(
+                        pos + start + 1, value[0][:16] + "...", value[1]
+                    )
         string += "```"
         # print(string)
         return string
