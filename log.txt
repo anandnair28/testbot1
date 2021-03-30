@@ -1,0 +1,3 @@
+Tables already exist, setting up connection with db!
+We have logged in as Noah's Sidekick#0702
+  -  Noah's Sidekick#4356
