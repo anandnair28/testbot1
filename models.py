@@ -408,7 +408,16 @@ class Database:
         string += "```\n"
         string += "{:<10}  {:<20} {:<8}\n".format("Position", "Username", "Q. Solved")
         string += "__________________________________________\n"
-        for pos, value in enumerate(res):
+        for pos, value in enumerate(res[:25]):
+            if len(value[0]) <= 20:
+                string += "{:<10} {:<20}  {:<8}\n".format(pos + 1, value[0], value[1])
+            else:
+                string += "{:<10} {:<20}  {:<8}\n".format(
+                    pos + 1, value[0][:16] + "...", value[1]
+                )
+        string += "```||"
+        string += "```\n"
+        for pos, value in enumerate(res[25:]):
             if len(value[0]) <= 20:
                 string += "{:<10} {:<20}  {:<8}\n".format(pos + 1, value[0], value[1])
             else:
