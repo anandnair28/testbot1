@@ -400,7 +400,7 @@ class Database:
 
     def get_leaderboard(self):
         self.cursor.execute(
-            "SELECT name, last_solved FROM users ORDER BY last_solved desc, last_solved_time asc LIMIT 20"
+            "SELECT name, last_solved FROM users ORDER BY last_solved desc, last_solved_time asc LIMIT 50"
         )
         res = self.cursor.fetchall()
         # print("res", res)
