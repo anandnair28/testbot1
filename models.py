@@ -22,8 +22,8 @@ VIEW_CLUE_BEFORE_VIEWING_HINT_TOAST = "View the Clue before trying to view a hin
 
 VIEWED_ALL_THE_HINTS_TOAST = "You have viewed all hints for this stage!"
 
-HINT_AFTER_CLUE_COUNTDOWN = [0.5, 0.5, 0.5]
-ATTEMPT_INTERVAL = [0.25, 0.1, 0]
+HINT_AFTER_CLUE_COUNTDOWN = [20, 30, 0]
+ATTEMPT_INTERVAL = [0.5, 0.25, 0]
 
 CANNOT_VIEW_HINT_JUST_YET_TOAST = "Wait for some time before viewing hint!"
 ATTEMPT_COOLDOWN_TOAST = "You have to wait some time before attempting again!"
@@ -403,7 +403,7 @@ class Database:
             "SELECT name, last_solved FROM users ORDER BY last_solved desc, last_solved_time asc LIMIT 20"
         )
         res = self.cursor.fetchall()
-        print("res", res)
+        # print("res", res)
         string = ""
         string += "```\n"
         string += "{:<10}  {:<20} {:<8}\n".format("Position", "Username", "Q. Solved")
@@ -416,5 +416,5 @@ class Database:
                     pos + 1, value[0][:16] + "...", value[1]
                 )
         string += "```"
-        print(string)
+        # print(string)
         return string
