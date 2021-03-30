@@ -22,8 +22,8 @@ VIEW_CLUE_BEFORE_VIEWING_HINT_TOAST = "View the Clue before trying to view a hin
 
 VIEWED_ALL_THE_HINTS_TOAST = "You have viewed all hints for this stage!"
 
-HINT_AFTER_CLUE_COUNTDOWN = [20, 30, 0]
-ATTEMPT_INTERVAL = [0.5, 0.25, 0]
+HINT_AFTER_CLUE_COUNTDOWN = [0.5, 0.5, 0]
+ATTEMPT_INTERVAL = [0.25, 0.1, 0]
 
 CANNOT_VIEW_HINT_JUST_YET_TOAST = "Wait for some time before viewing hint!"
 ATTEMPT_COOLDOWN_TOAST = "You have to wait some time before attempting again!"
